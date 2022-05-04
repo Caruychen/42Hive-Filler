@@ -6,7 +6,7 @@
 #    By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/04 09:42:03 by cchen             #+#    #+#              #
-#    Updated: 2022/05/04 10:05:22 by cchen            ###   ########.fr        #
+#    Updated: 2022/05/04 12:57:54 by cchen            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,8 @@ CFLAGS := -Wall -Werror -Wextra
 INCLUDES := -I./libft -I./includes
 
 SRC_DIR := ./src
-SRCS := $(SRC_DIR)/main.c
+SRCS := $(SRC_DIR)/main.c \
+		$(SRC_DIR)/init.c
 
 OBJ_DIR := ./obj
 OBJS := $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
