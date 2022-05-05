@@ -1,22 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/04 10:00:00 by cchen             #+#    #+#             */
-/*   Updated: 2022/05/05 16:02:15 by cchen            ###   ########.fr       */
+/*   Created: 2022/05/05 15:42:51 by cchen             #+#    #+#             */
+/*   Updated: 2022/05/05 16:02:17 by cchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 
-int	main(void)
+int	error(t_map *map, char *msg)
 {
-	t_map	map;
-
-	init(&map);
-	ft_printf("0 0");
-	return (0);
+	if (map)
+	{
+		if (map->map)
+			ft_strdelarray(&(map->map));
+	}
+	ft_putendl_fd(msg, 2);
+	return (ERROR);
 }

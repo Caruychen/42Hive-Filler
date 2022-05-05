@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 13:10:11 by cchen             #+#    #+#             */
-/*   Updated: 2022/05/05 14:32:50 by cchen            ###   ########.fr       */
+/*   Updated: 2022/05/05 16:13:24 by cchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,17 +32,17 @@ static int	get_size(t_map *map)
 
 	plateau = read_plateau();
 	if (!plateau)
-		return (ERROR);
+		return (error(NULL, "Error reading size data: get_size()"));
 	if (ft_strcmp("Plateau", plateau[0]))
 	{
 		ft_strdelarray(&plateau);
-		return (ERROR);
+		return (error(NULL, "Invalid size found"));
 	}
 	map->height = ft_atoi(plateau[1]);
 	map->width = ft_atoi(plateau[2]);
 	ft_strdelarray(&plateau);
 	if (!map->height || !map->width)
-		return (ERROR);
+		return (error(NULL, "Invalid height/width"));
 	return (OK);
 }
 
@@ -82,17 +82,12 @@ int init_map(t_map *map)
 	while (row < map->height)
 	{
 		if (get_next_line(0, &line) <= 0)
-		{
-			ft_strdelarray(&(map->map));
-			return (ERROR);
-		}
+			return (error(map, "Error reading input line: init_map.c"));
 		map->map[row] = ft_strsub(line, 4, map->width);
 		ft_strdel(&line);
 		if (!is_valid_map(map->map[row], map->width))
-		{
-			ft_strdelarray(&(map->map));
-			return (ERROR);
-		}
+			return (error(map, "Invalid map detected: init_map.c"));
+		++row;
 	}
 	return (OK);
 }
