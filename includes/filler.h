@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 10:01:17 by cchen             #+#    #+#             */
-/*   Updated: 2022/05/04 13:38:05 by cchen            ###   ########.fr       */
+/*   Updated: 2022/05/05 14:26:47 by cchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 
 typedef struct s_map
 {
+	char	**map;
 	char	me;
 	char	enemy;
 	int		width;
@@ -31,5 +32,6 @@ typedef struct s_map
 }				t_map;
 
 void	init(t_map *map);
+int		init_map(t_map *map);
 
 #endif
