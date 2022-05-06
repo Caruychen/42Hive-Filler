@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 10:00:00 by cchen             #+#    #+#             */
-/*   Updated: 2022/05/06 16:53:27 by cchen            ###   ########.fr       */
+/*   Updated: 2022/05/06 17:16:22 by cchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,15 @@ void debug(t_map map)
 int	main(void)
 {
 	t_map	map;
-//	t_piece	piece;
+	t_piece	piece;
 
-	if (!init(&map))
+	if (!init(&map, &piece))
 		return (0);
 	while (1)
 	{
 		if (!read_map(&map))
+			return (0);
+		if (!read_piece(&piece))
 			return (0);
 		ft_printf("0 0");
 	}

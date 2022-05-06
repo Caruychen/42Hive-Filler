@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 12:55:27 by cchen             #+#    #+#             */
-/*   Updated: 2022/05/06 17:06:58 by cchen            ###   ########.fr       */
+/*   Updated: 2022/05/06 17:26:40 by cchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,33 +33,12 @@ static int	init_players(t_map *map)
 	return (OK);
 }
 
-static int	init_data(char ***array, t_dimension *dimensions, char *name)
-{
-	int	row;
-
-	if (*array)
-		return (OK);
-	if (!get_dimensions(dimensions, name)) 
-		return (error(NULL, "Error reading dimensions: init_data()"));
-	*array = (char **)malloc(sizeof(char *) * (dimensions->h + 1));
-	if (!*array)
-		return (error(NULL, "Error allocating data array: init_data()"));
-	row = 0;
-	while (row < dimensions->h)
-	{
-		(*array)[row] = (char *)ft_strnew(sizeof(char) * dimensions->w);
-		if (!(*array)[row])
-			return (error(*array, "Error allocating data row: init_data()"));
-		row++;
-	}
-	return (OK);
-}
-
-int	init(t_map *map)
+int	init(t_map *map, t_piece *piece)
 {
 	ft_bzero(map, sizeof(*map));
+	ft_bzero(piece, sizeof(*piece));
 	init_players(map);
-	if(!init_data(&(map->map), &(map->dimension), "Plateau"))
-		return (error(NULL, "Error reading map datal init()"));
+	if(!init_array(&(map->map), &(map->dimension), "Plateau"))
+		return (error(NULL, "Error reading map data init()"));
 	return (OK);
 }

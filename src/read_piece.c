@@ -1,48 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   read_map.c                                         :+:      :+:    :+:   */
+/*   read_piece.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/04 13:10:11 by cchen             #+#    #+#             */
-/*   Updated: 2022/05/06 17:14:52 by cchen            ###   ########.fr       */
+/*   Created: 2022/05/06 17:12:31 by cchen             #+#    #+#             */
+/*   Updated: 2022/05/06 17:29:48 by cchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "filler.h"
-
-static int	is_valid(char *row, int width)
-{
-	if (ft_strlen(row) != (size_t) width)
-		return (ERROR);
-	while (*row)
-	{
-		if (!ft_strchr(".oOxX", *row))
-			return (ERROR);
-		++row;
-	}
-	return (OK);
-}
-
-int read_map(t_map *map)
+int	read_piece(t_piece *piece)
 {
 	char	*line;
 	int		row;
 	int		height;
 	int		width;
 
-	skip_line();
-	height = map->dimension.h;
-	width = map->dimension.w;
+	if(!init_array(&(piece->pc), &(piece->dimension), "Piece"))
+		return (error(NULL, "Error reading piece data: read_piece()"));
+	height = piece->dimension.h;
+	width = piece->dimension.w;
 	row = 0;
 	while (row < height)
 	{
 		if (get_next_line(0, &line) <= 0)
-			return (error(map->map, "Error reading input line: read_map()"));
-		ft_memcpy(map->map[row], line + 4, width);
-		if (!is_valid(map->map[row], width))
-			return (error(map->map, "Invalid map detected: read_map()"));
+			return (error(piece->pc, "Error reading input line: read_piece()"));
+		ft_memcpy(piece->pc[row], line, width);
+		if (!is_valid(piece->pc[row], width))
+			return (error(piece->pc, "Invalid piece detected: read_piece()"));
 		ft_strdel(&line);
 		++row;
 	}
