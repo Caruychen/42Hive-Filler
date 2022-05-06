@@ -6,7 +6,7 @@
 #    By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/04 09:42:03 by cchen             #+#    #+#              #
-#    Updated: 2022/05/05 15:56:28 by cchen            ###   ########.fr        #
+#    Updated: 2022/05/06 14:30:42 by cchen            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,8 @@ INCLUDES := -I./libft -I./includes
 SRC_DIR := ./src
 SRCS := $(SRC_DIR)/main.c \
 		$(SRC_DIR)/init.c \
-		$(SRC_DIR)/init_map.c \
+		$(SRC_DIR)/read_map.c \
+		$(SRC_DIR)/utils.c \
 		$(SRC_DIR)/errors.c
 
 OBJ_DIR := ./obj

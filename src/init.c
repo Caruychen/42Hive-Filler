@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 12:55:27 by cchen             #+#    #+#             */
-/*   Updated: 2022/05/05 16:02:16 by cchen            ###   ########.fr       */
+/*   Updated: 2022/05/06 15:13:35 by cchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,33 @@ static int	init_players(t_map *map)
 	return (OK);
 }
 
-void	init(t_map *map)
+static int	init_data(char **array, t_dimension *dimensions, char *name)
+{
+	int	row;
+
+	if (array)
+		return (OK);
+	if (!get_dimensions(dimensions, name)) 
+		return (error(NULL, "Error reading dimensions: init_data()"));
+	array = (char **)malloc(sizeof(char *) * (dimensions->h + 1));
+	if (!array)
+		return (error(NULL, "Error allocating data array: init_data()"));
+	row = 0;
+	while (row < dimensions->h)
+	{
+		array[row] = (char *)ft_strnew(sizeof(char) * dimensions->w);
+		if (!array[row])
+			return (error(NULL, "Error allocating data row: init_data()"));
+		row++;
+	}
+	return (OK);
+}
+
+int	init(t_map *map, t_piece *piece)
 {
 	ft_bzero(map, sizeof(*map));
 	init_players(map);
-	init_map(map);
+	if(!init_data(map->map, &(map->dimension), "Plateau"))
+		return (error(NULL, "Error reading map data"));
+	return (OK);
 }
