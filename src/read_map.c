@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_map.c                                       :+:      :+:    :+:   */
+/*   read_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 13:10:11 by cchen             #+#    #+#             */
-/*   Updated: 2022/05/06 14:53:39 by cchen            ###   ########.fr       */
+/*   Updated: 2022/05/06 17:08:27 by cchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,10 @@ int read_map(t_map *map)
 	while (row < height)
 	{
 		if (get_next_line(0, &line) <= 0)
-			return (error(map, "Error reading input line: read_map.c"));
+			return (error(map->map, "Error reading input line: read_map()"));
 		ft_memcpy(map->map[row], line + 4, width);
 		if (!is_valid(map->map[row], width))
-			return (error(map, "Invalid map detected: read_map.c"));
+			return (error(map->map, "Invalid map detected: read_map()"));
 		ft_strdel(&line);
 		++row;
 	}

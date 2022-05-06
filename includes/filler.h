@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 10:01:17 by cchen             #+#    #+#             */
-/*   Updated: 2022/05/06 14:55:43 by cchen            ###   ########.fr       */
+/*   Updated: 2022/05/06 16:36:06 by cchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ typedef struct s_piece
 	t_dimension	dimension;
 }				t_piece;
 
-int		init(t_map *map, t_piece *piece);
+int		init(t_map *map);
 int		read_map(t_map *map);
-int		error(t_map *map, char *msg);
+int		error(char **array, char *msg);
 int		get_dimensions(t_dimension *dimension, char *name);
 
 #endif

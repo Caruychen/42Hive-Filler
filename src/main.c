@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 10:00:00 by cchen             #+#    #+#             */
-/*   Updated: 2022/05/06 15:06:57 by cchen            ###   ########.fr       */
+/*   Updated: 2022/05/06 16:53:27 by cchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ void debug(t_map map)
 int	main(void)
 {
 	t_map	map;
-	t_piece	piece;
+//	t_piece	piece;
 
-	if (!init(&map, &piece))
+	if (!init(&map))
 		return (0);
 	while (1)
 	{
