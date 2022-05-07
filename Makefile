@@ -6,7 +6,7 @@
 #    By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/04 09:42:03 by cchen             #+#    #+#              #
-#    Updated: 2022/05/06 14:30:42 by cchen            ###   ########.fr        #
+#    Updated: 2022/05/07 15:12:59 by cchen            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ SRC_DIR := ./src
 SRCS := $(SRC_DIR)/main.c \
 		$(SRC_DIR)/init.c \
 		$(SRC_DIR)/read_map.c \
+		$(SRC_DIR)/read_piece.c \
 		$(SRC_DIR)/utils.c \
 		$(SRC_DIR)/errors.c
 

@@ -6,32 +6,32 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 10:00:00 by cchen             #+#    #+#             */
-/*   Updated: 2022/05/06 17:16:22 by cchen            ###   ########.fr       */
+/*   Updated: 2022/05/07 16:19:49 by cchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 
-void debug(t_map map)
+void debug(t_board board)
 {
 	int row = 0;
-	while (row < map.dimension.h)
+	while (row < board.grid.dimensions.h)
 	{
-		ft_putendl_fd(map.map[row], 2);
+		ft_putendl_fd(board.grid.array[row], 2);
 		row++;
 	}
 }
 
 int	main(void)
 {
-	t_map	map;
+	t_board	board;
 	t_piece	piece;
 
-	if (!init(&map, &piece))
+	if (!init(&board, &piece))
 		return (0);
 	while (1)
 	{
-		if (!read_map(&map))
+		if (!read_board(&board))
 			return (0);
 		if (!read_piece(&piece))
 			return (0);

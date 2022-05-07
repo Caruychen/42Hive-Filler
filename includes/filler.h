@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 10:01:17 by cchen             #+#    #+#             */
-/*   Updated: 2022/05/06 17:16:39 by cchen            ###   ########.fr       */
+/*   Updated: 2022/05/07 16:19:04 by cchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,31 +22,36 @@
 
 # include "libft.h"
 
-typedef struct s_dimension
+typedef struct s_dimensions
 {
 	int	w;
 	int	h;
-}				t_dimension;
+}				t_dimensions;
 
-typedef struct s_map
+typedef	struct s_grid
 {
-	char		**map;
+	char		**array;
+	t_dimensions	dimensions;
+}				t_grid;
+
+typedef struct s_board
+{
+	t_grid		grid;
 	char		me;
 	char		enemy;
-	t_dimension	dimension;
-}				t_map;
+}				t_board;
 
 typedef struct s_piece
 {
-	char		**pc;
-	t_dimension	dimension;
+	t_grid		grid;
 }				t_piece;
 
-int		init(t_map *map, t_piece *piece);
-int		read_map(t_map *map);
+int		init(t_board *board, t_piece *piece);
+int		read_board(t_board *board);
+int		read_piece(t_piece *piece);
 int		error(char **array, char *msg);
 int		skip_line(void);
-int		get_dimensions(t_dimension *dimension, char *name);
-int		init_array(char ***array, t_dimension *dimensions, char *name);
+int		make_array(t_grid *grid, char *name);
+int		is_valid_line(char *line, int width, char *sample);
 
 #endif
