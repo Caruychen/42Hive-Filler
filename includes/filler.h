@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 10:01:17 by cchen             #+#    #+#             */
-/*   Updated: 2022/05/08 10:02:57 by cchen            ###   ########.fr       */
+/*   Updated: 2022/05/08 10:06:45 by cchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,6 @@ int		error(char **array, char *msg);
 int		skip_line(void);
 int		make_grid(t_grid *grid, char *name);
 int		is_valid_line(char *line, int width, char *sample);
-int		read_input(t_grid *grid, int start, char *sample);
+int		set_grid(t_grid *grid, int start, char *sample);
 
 #endif

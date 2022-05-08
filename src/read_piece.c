@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 17:12:31 by cchen             #+#    #+#             */
-/*   Updated: 2022/05/08 10:03:28 by cchen            ###   ########.fr       */
+/*   Updated: 2022/05/08 10:06:20 by cchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,5 @@ int	read_piece(t_piece *piece)
 {
 	if (!make_piece(piece))
 		return (error(NULL, "Error making piece: read_piece()"));
-	return (read_input(&(piece->grid), 0, ".*"));
+	return (set_grid(&(piece->grid), 0, ".*"));
 }

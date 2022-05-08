@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 13:50:14 by cchen             #+#    #+#             */
-/*   Updated: 2022/05/08 10:02:51 by cchen            ###   ########.fr       */
+/*   Updated: 2022/05/08 10:05:58 by cchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,29 @@ int	make_grid(t_grid *grid, char *name)
 	return (OK);
 }
 
+int	set_grid(t_grid *grid, int start, char *sample)
+{
+	char	*line;
+	int	height;
+	int	width;
+	int	row;
+
+	height = grid->dimensions.h;
+	width = grid->dimensions.w;
+	row = 0;
+	while (row < height)
+	{
+		if (get_next_line(0, &line) <= 0)
+			return (error(grid->array, "Error reading input line: read_input()"));
+		ft_memcpy(grid->array[row], line + start, width);
+		if (!is_valid_line(grid->array[row], width, sample))
+			return (error(grid->array, "Invalid board detected: read_input()"));
+		ft_strdel(&line);
+		++row;
+	}
+	return (OK);
+}
+
 int	skip_line(void)
 {
 	char	*line;
@@ -72,29 +95,6 @@ int	is_valid_line(char *line, int width, char *sample)
 		if (!ft_strchr(sample, *line))
 			return (ERROR);
 		++line;
-	}
-	return (OK);
-}
-
-int	read_input(t_grid *grid, int start, char *sample)
-{
-	char	*line;
-	int	height;
-	int	width;
-	int	row;
-
-	height = grid->dimensions.h;
-	width = grid->dimensions.w;
-	row = 0;
-	while (row < height)
-	{
-		if (get_next_line(0, &line) <= 0)
-			return (error(grid->array, "Error reading input line: read_input()"));
-		ft_memcpy(grid->array[row], line + start, width);
-		if (!is_valid_line(grid->array[row], width, sample))
-			return (error(grid->array, "Invalid board detected: read_input()"));
-		ft_strdel(&line);
-		++row;
 	}
 	return (OK);
 }
