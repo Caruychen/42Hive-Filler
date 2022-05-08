@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 17:12:31 by cchen             #+#    #+#             */
-/*   Updated: 2022/05/08 10:06:20 by cchen            ###   ########.fr       */
+/*   Updated: 2022/05/08 11:26:24 by cchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@ static int	make_piece(t_piece *piece)
 {
 	if (piece->grid.array)
 		ft_strdelarray(&(piece->grid.array));
-	return (make_grid(&(piece->grid), "Piece"));
+	if (!set_dimensions(&(piece->grid.dimensions), "Piece")) 
+		return (error(NULL, "Error reading dimensions: make_piece()"));
+	return (make_grid(&(piece->grid)));
 }
 
 int	read_piece(t_piece *piece)

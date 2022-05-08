@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   read_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 13:50:14 by cchen             #+#    #+#             */
-/*   Updated: 2022/05/08 10:05:58 by cchen            ###   ########.fr       */
+/*   Updated: 2022/05/08 11:54:36 by cchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 
-static int	set_dimensions(t_dimensions *dimensions, char *name)
+int	set_dimensions(t_dimensions *dimensions, char *name)
 {
 	char		*line;
 
@@ -31,23 +31,21 @@ static int	set_dimensions(t_dimensions *dimensions, char *name)
 	return (OK);
 }
 
-int	make_grid(t_grid *grid, char *name)
+int	make_grid(t_grid *grid)
 {
 	int		row;
 	t_dimensions	*dims;
 
 	dims = &(grid->dimensions);
-	if (!set_dimensions(dims, name)) 
-		return (error(NULL, "Error reading dimensions: init_array()"));
-	grid->array = (char **)malloc(sizeof(char *) * (dims->h + 1));
+	grid->array = (char **)ft_memmalloc(sizeof(char *) * (dims->h + 1));
 	if (!grid->array)
-		return (error(NULL, "Error allocating data array: init_array()"));
+		return (error(NULL, "Error allocating data array: make_grid()"));
 	row = 0;
 	while (row < dims->h)
 	{
 		grid->array[row] = (char *)ft_strnew(sizeof(char) * dims->w);
 		if (!grid->array[row])
-			return (error(grid->array, "Error allocating data row: init_array()"));
+			return (error(grid->array, "Error allocating data row: make_grid()"));
 		row++;
 	}
 	return (OK);

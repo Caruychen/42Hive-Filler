@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 13:10:11 by cchen             #+#    #+#             */
-/*   Updated: 2022/05/08 11:00:07 by cchen            ###   ########.fr       */
+/*   Updated: 2022/05/08 11:39:24 by cchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,11 @@
 
 static int	make_board(t_board *board)
 {
-	if (!board->grid.array)
-		return (make_grid(&(board->grid), "Plateau"));
-	skip_line();
-	return (OK);
+	if (board->grid.array)
+		return (skip_line());
+	if (!set_dimensions(&(board->grid.dimensions), "Plateau")) 
+		return (error(NULL, "Error reading dimensions: make_board()"));
+	return (make_grid(&(board->grid)));
 }
 
 int read_board(t_board *board)

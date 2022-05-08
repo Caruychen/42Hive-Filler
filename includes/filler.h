@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 10:01:17 by cchen             #+#    #+#             */
-/*   Updated: 2022/05/08 10:06:45 by cchen            ###   ########.fr       */
+/*   Updated: 2022/05/08 11:38:18 by cchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,16 @@ typedef struct s_dimensions
 	int	h;
 }				t_dimensions;
 
-typedef	struct s_grid
+typedef struct s_grid
 {
-	char		**array;
+	char			**array;
 	t_dimensions	dimensions;
 }				t_grid;
 
 typedef struct s_board
 {
 	t_grid		grid;
+	t_grid		heat;
 	char		me;
 	char		enemy;
 }				t_board;
@@ -51,8 +52,9 @@ int		read_board(t_board *board);
 int		read_piece(t_piece *piece);
 int		error(char **array, char *msg);
 int		skip_line(void);
-int		make_grid(t_grid *grid, char *name);
+int		make_grid(t_grid *grid);
 int		is_valid_line(char *line, int width, char *sample);
 int		set_grid(t_grid *grid, int start, char *sample);
+int		set_dimensions(t_dimensions *dimensions, char *name);
 
 #endif
