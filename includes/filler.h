@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 10:01:17 by cchen             #+#    #+#             */
-/*   Updated: 2022/05/07 16:19:04 by cchen            ###   ########.fr       */
+/*   Updated: 2022/05/08 10:02:57 by cchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ int		read_board(t_board *board);
 int		read_piece(t_piece *piece);
 int		error(char **array, char *msg);
 int		skip_line(void);
-int		make_array(t_grid *grid, char *name);
+int		make_grid(t_grid *grid, char *name);
 int		is_valid_line(char *line, int width, char *sample);
+int		read_input(t_grid *grid, int start, char *sample);
 
 #endif

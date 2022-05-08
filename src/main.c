@@ -6,18 +6,18 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 10:00:00 by cchen             #+#    #+#             */
-/*   Updated: 2022/05/07 16:19:49 by cchen            ###   ########.fr       */
+/*   Updated: 2022/05/08 10:03:47 by cchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 
-void debug(t_board board)
+void debug(t_grid grid)
 {
 	int row = 0;
-	while (row < board.grid.dimensions.h)
+	while (row < grid.dimensions.h)
 	{
-		ft_putendl_fd(board.grid.array[row], 2);
+		ft_putendl_fd(grid.array[row], 2);
 		row++;
 	}
 }
@@ -35,6 +35,8 @@ int	main(void)
 			return (0);
 		if (!read_piece(&piece))
 			return (0);
+		debug(board.grid);
+		debug(piece.grid);
 		ft_printf("0 0");
 	}
 	return (0);
