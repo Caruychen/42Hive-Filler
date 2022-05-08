@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 10:00:00 by cchen             #+#    #+#             */
-/*   Updated: 2022/05/08 10:03:47 by cchen            ###   ########.fr       */
+/*   Updated: 2022/05/08 10:53:49 by cchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,7 @@ int	main(void)
 		if (!read_board(&board))
 			return (0);
 		if (!read_piece(&piece))
-			return (0);
-		debug(board.grid);
-		debug(piece.grid);
+			return (error(board.grid.array, "Error: read piece failed"));
 		ft_printf("0 0");
 	}
 	return (0);
