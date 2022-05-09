@@ -1,5 +1,5 @@
-seed = 7741
-O: timedout
+seed = 2196
+O: error on input
 ./resources/players/champely.filler won
 Score:
 0AGAINST0
