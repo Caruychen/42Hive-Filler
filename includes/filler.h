@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 10:01:17 by cchen             #+#    #+#             */
-/*   Updated: 2022/05/09 11:17:42 by cchen            ###   ########.fr       */
+/*   Updated: 2022/05/09 18:05:23 by cchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,12 @@
 /* END DELETE ME */
 
 # include "libft.h"
+# include <stdint.h>
 
 typedef struct s_coord
 {
-	int	row;
-	int col;
+	int32_t	row;
+	int32_t col;
 }				t_coord;
 
 typedef struct s_dimensions

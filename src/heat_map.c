@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 11:01:19 by cchen             #+#    #+#             */
-/*   Updated: 2022/05/09 16:56:17 by cchen            ###   ########.fr       */
+/*   Updated: 2022/05/09 19:42:15 by cchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,6 @@ static void	init_adj(t_grid heat, t_vec *adj)
 	}
 }
 
-/*
 static void	scan_neighbours(t_coord coord, t_grid *heat, t_vec *adj)
 {
 	char	value;
@@ -107,7 +106,7 @@ static void	scan_neighbours(t_coord coord, t_grid *heat, t_vec *adj)
 	new_coord.row--;
 	if (coord.row > 0 && heat->array[new_coord.row][new_coord.col] == -1)
 	{
-		vec_push(adj, &coord);
+		vec_push(adj, &new_coord);
 		heat->array[new_coord.row][new_coord.col] = value + 1;
 	}
 }
@@ -120,13 +119,12 @@ static void	traverse(t_grid *heat, t_vec *adj)
 	index = 0;
 	while (index < adj->len)
 	{
-		coord = ((t_coord*) (adj->memory))[index * adj->elem_size];
+		coord = ((t_coord*) (adj->memory))[index];
 		scan_neighbours(coord, heat, adj);
 		dprintf(2, "%zu, %d, %d, %s, %zu\n", index, coord.row, coord.col, ft_itoa(heat->array[coord.row][coord.col]), adj->len);
 		index++;
 	}
 }
-*/
 
 static void	fill_heat(t_board *board)
 {
@@ -134,8 +132,7 @@ static void	fill_heat(t_board *board)
 
 	vec_new(&adj, 1, sizeof(t_coord));
 	init_adj(board->heat, &adj);
-	dprintf(2, "%zu %d %d\n", adj.alloc_size, ((t_coord*)(adj.memory))[8].row, ((t_coord*)(adj.memory))[8].col);
-//	traverse(&(board->heat), &adj);
+	traverse(&(board->heat), &adj);
 }
 
 int	set_heat(t_board *board)
