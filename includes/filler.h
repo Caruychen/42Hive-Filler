@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 10:01:17 by cchen             #+#    #+#             */
-/*   Updated: 2022/05/08 11:38:18 by cchen            ###   ########.fr       */
+/*   Updated: 2022/05/09 11:17:42 by cchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,12 @@
 /* END DELETE ME */
 
 # include "libft.h"
+
+typedef struct s_coord
+{
+	int	row;
+	int col;
+}				t_coord;
 
 typedef struct s_dimensions
 {
@@ -56,5 +62,6 @@ int		make_grid(t_grid *grid);
 int		is_valid_line(char *line, int width, char *sample);
 int		set_grid(t_grid *grid, int start, char *sample);
 int		set_dimensions(t_dimensions *dimensions, char *name);
+int		set_heat(t_board *board);
 
 #endif

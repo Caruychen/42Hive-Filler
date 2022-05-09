@@ -6,7 +6,7 @@
 #    By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/04 09:42:03 by cchen             #+#    #+#              #
-#    Updated: 2022/05/08 10:57:15 by cchen            ###   ########.fr        #
+#    Updated: 2022/05/09 10:11:38 by cchen            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ SRCS := $(SRC_DIR)/main.c \
 		$(SRC_DIR)/read_board.c \
 		$(SRC_DIR)/read_piece.c \
 		$(SRC_DIR)/read_utils.c \
+		$(SRC_DIR)/heat_map.c \
 		$(SRC_DIR)/errors.c
 
 OBJ_DIR := ./obj

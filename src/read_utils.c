@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 13:50:14 by cchen             #+#    #+#             */
-/*   Updated: 2022/05/08 11:54:36 by cchen            ###   ########.fr       */
+/*   Updated: 2022/05/09 10:27:09 by cchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	set_dimensions(t_dimensions *dimensions, char *name)
 	if (!ft_strstr(line, name))
 	{
 		ft_strdel(&line);
-		return (error(NULL, "Error, dimension category not found: get_dimensions()"));
+		return (error(NULL, "Failed to find dimension: get_dimensions()"));
 	}
 	dimensions->h = ft_atoi(ft_strchr(line, ' '));
 	dimensions->w = ft_atoi(ft_strrchr(line, ' '));
@@ -33,11 +33,11 @@ int	set_dimensions(t_dimensions *dimensions, char *name)
 
 int	make_grid(t_grid *grid)
 {
-	int		row;
+	int				row;
 	t_dimensions	*dims;
 
 	dims = &(grid->dimensions);
-	grid->array = (char **)ft_memmalloc(sizeof(char *) * (dims->h + 1));
+	grid->array = (char **)ft_memalloc(sizeof(char *) * (dims->h + 1));
 	if (!grid->array)
 		return (error(NULL, "Error allocating data array: make_grid()"));
 	row = 0;
@@ -45,7 +45,7 @@ int	make_grid(t_grid *grid)
 	{
 		grid->array[row] = (char *)ft_strnew(sizeof(char) * dims->w);
 		if (!grid->array[row])
-			return (error(grid->array, "Error allocating data row: make_grid()"));
+			return (error(grid->array, "Error allocating row: make_grid()"));
 		row++;
 	}
 	return (OK);
@@ -54,9 +54,9 @@ int	make_grid(t_grid *grid)
 int	set_grid(t_grid *grid, int start, char *sample)
 {
 	char	*line;
-	int	height;
-	int	width;
-	int	row;
+	int		height;
+	int		width;
+	int		row;
 
 	height = grid->dimensions.h;
 	width = grid->dimensions.w;
@@ -64,7 +64,7 @@ int	set_grid(t_grid *grid, int start, char *sample)
 	while (row < height)
 	{
 		if (get_next_line(0, &line) <= 0)
-			return (error(grid->array, "Error reading input line: read_input()"));
+			return (error(grid->array, "Error reading line: read_input()"));
 		ft_memcpy(grid->array[row], line + start, width);
 		if (!is_valid_line(grid->array[row], width, sample))
 			return (error(grid->array, "Invalid board detected: read_input()"));
