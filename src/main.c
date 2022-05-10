@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 10:00:00 by cchen             #+#    #+#             */
-/*   Updated: 2022/05/09 10:24:59 by cchen            ###   ########.fr       */
+/*   Updated: 2022/05/10 21:43:54 by cchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,10 @@ int	main(void)
 			return (0);
 		if (!read_piece(&piece))
 			return (error(board.grid.array, "Error: read piece failed"));
-		set_heat(&board);
+		if (!set_heat(&board))
+			return (error(piece.grid.array, "Error: set heat map failed"));
+		dprintf(2, "start: %d %d, size: %d %d\n", board.start.row, board.start.col, board.real_size.h, board.real_size.w);
+		dprintf(2, "start: %d %d, size: %d %d\n", piece.start.row, piece.start.col, piece.real_size.h, piece.real_size.w);
 	/*
 		debug(board.grid);
 		debug(piece.grid);

@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 22:52:07 by cchen             #+#    #+#             */
-/*   Updated: 2022/05/10 20:36:28 by cchen            ###   ########.fr       */
+/*   Updated: 2022/05/10 21:14:35 by cchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,8 @@ int	scan_queue(t_grid *heat, t_vec *queue)
 	while (index < queue->len)
 	{
 		coord = ((t_coord *)(queue->memory))[index];
-		if(!scan_neighbours(coord, heat, queue))
-			return (error(NULL,"Error scanning neighbours: scan_queue()"));
+		if (!scan_neighbours(coord, heat, queue))
+			return (error(NULL, "Error scanning neighbours: scan_queue()"));
 		index++;
 	}
 	return (OK);

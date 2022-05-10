@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 10:01:17 by cchen             #+#    #+#             */
-/*   Updated: 2022/05/10 20:32:11 by cchen            ###   ########.fr       */
+/*   Updated: 2022/05/10 21:21:42 by cchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,15 @@ typedef struct s_board
 	t_grid		heat;
 	char		me;
 	char		enemy;
+	t_coord		start;
+	t_dimensions	real_size;
 }				t_board;
 
 typedef struct s_piece
 {
 	t_grid		grid;
+	t_coord		start;
+	t_dimensions	real_size;
 }				t_piece;
 
 int		init(t_board *board, t_piece *piece);

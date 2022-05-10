@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 17:12:31 by cchen             #+#    #+#             */
-/*   Updated: 2022/05/09 10:25:48 by cchen            ###   ########.fr       */
+/*   Updated: 2022/05/10 21:43:24 by cchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,47 @@ static int	make_piece(t_piece *piece)
 	return (make_grid(&(piece->grid)));
 }
 
+static void	update_piece(t_piece *piece, t_coord coord)
+{
+	if (coord.row < piece->start.row)
+		piece->start.row = coord.row;
+	if (coord.row >= piece->start.row + piece->real_size.h)
+		piece->real_size.h = coord.row - piece->start.row + 1;
+	if (coord.col < piece->start.col)
+		piece->start.col = coord.col;
+	if (coord.col >= piece->start.col + piece->real_size.w)
+		piece->real_size.w = coord.col - piece->start.col + 1;
+}
+
+static int	seek_piece(t_piece *piece)
+{
+	t_coord			coord;
+	t_dimensions	limit;
+	char			**array;
+
+	array = piece->grid.array;
+	limit = piece->grid.dimensions;
+	piece->start = (t_coord){.row = limit.h, .col = limit.w};
+	coord.row = 0;
+	while (coord.row < limit.h)
+	{
+		coord.col = 0;
+		while (coord.col < limit.w)
+		{
+			if (array[coord.row][coord.col] == '*')
+				update_piece(piece, coord);
+			coord.col++;
+		}
+		coord.row++;
+	}
+	return (OK);
+}
+
 int	read_piece(t_piece *piece)
 {
 	if (!make_piece(piece))
 		return (error(NULL, "Error making piece: read_piece()"));
-	return (set_grid(&(piece->grid), 0, ".*"));
+	if (!set_grid(&(piece->grid), 0, ".*"))
+		return (error(NULL, "Failed to set grid: read_piece()"));
+	return (seek_piece(piece));
 }

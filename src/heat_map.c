@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 11:01:19 by cchen             #+#    #+#             */
-/*   Updated: 2022/05/10 20:33:36 by cchen            ###   ########.fr       */
+/*   Updated: 2022/05/10 21:18:33 by cchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,10 @@ static int	fill_heat(t_board *board)
 
 	if (vec_new(&queue, 1, sizeof(t_coord)) == -1)
 		return (error(NULL, "Error allocating queue: fill_heat()"));
-	if (init_queue(board->heat, &queue) == -1)
+	if (!init_queue(board->heat, &queue))
 		return (error(NULL, "Error initializing queue: fill_heat()"));
-	scan_queue(&(board->heat), &queue);
+	if (!scan_queue(&(board->heat), &queue))
+		return (error(NULL, "Error scanning queue: fill_heat()"));
 	vec_free(&queue);
 	return (OK);
 }
