@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 11:01:19 by cchen             #+#    #+#             */
-/*   Updated: 2022/05/09 23:18:48 by cchen            ###   ########.fr       */
+/*   Updated: 2022/05/10 20:33:36 by cchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,21 +44,17 @@ static void	init_heat(t_board *board)
 	}
 }
 
-static void	print_heat(t_board *board)
+static int	fill_heat(t_board *board)
 {
-	t_dimensions	index;
-	t_dimensions	limit;
+	t_vec	queue;
 
-	limit = board->heat.dimensions;
-	index.h = 0;
-	while (index.h < limit.h)
-	{
-		index.w = 0;
-		while (index.w < limit.w)
-			dprintf(2, "%3s",ft_itoa(board->heat.array[index.h][index.w++]));
-		ft_putendl_fd("", 2);
-		index.h++;
-	}
+	if (vec_new(&queue, 1, sizeof(t_coord)) == -1)
+		return (error(NULL, "Error allocating queue: fill_heat()"));
+	if (init_queue(board->heat, &queue) == -1)
+		return (error(NULL, "Error initializing queue: fill_heat()"));
+	scan_queue(&(board->heat), &queue);
+	vec_free(&queue);
+	return (OK);
 }
 
 int	set_heat(t_board *board)
@@ -66,7 +62,7 @@ int	set_heat(t_board *board)
 	if (!make_heat(board))
 		return (error(board->grid.array, "Error making heatmap: set_heat()"));
 	init_heat(board);
-	fill_heat(board);
-	print_heat(board);
+	if (!fill_heat(board))
+		return (error(board->grid.array, "Error filling heatmap: set_heat()"));
 	return (OK);
 }

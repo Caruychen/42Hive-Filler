@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 10:01:17 by cchen             #+#    #+#             */
-/*   Updated: 2022/05/09 23:09:01 by cchen            ###   ########.fr       */
+/*   Updated: 2022/05/10 20:32:11 by cchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ int		is_valid_line(char *line, int width, char *sample);
 int		set_grid(t_grid *grid, int start, char *sample);
 int		set_dimensions(t_dimensions *dimensions, char *name);
 int		set_heat(t_board *board);
-int		fill_heat(t_board *board);
+int		init_queue(t_grid heat, t_vec *adj);
+int		scan_queue(t_grid *heat, t_vec *adj);
 
 #endif

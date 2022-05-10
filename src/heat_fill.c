@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 22:52:07 by cchen             #+#    #+#             */
-/*   Updated: 2022/05/09 23:15:56 by cchen            ###   ########.fr       */
+/*   Updated: 2022/05/10 20:32:14 by cchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,41 +29,40 @@ static int	is_exposed_edge(t_grid heat, t_coord coord)
 	return (0);
 }
 
-static void	enqueue(t_coord coord, t_grid *heat, t_vec *adj)
+static int	fill(char value, t_coord new_coord, t_grid *heat, t_vec *queue)
+{
+	if (heat->array[new_coord.row][new_coord.col] != -1)
+		return (OK);
+	if (vec_push(queue, &new_coord) == -1)
+		return (error(NULL, "Memory allocation error in fill()"));
+	heat->array[new_coord.row][new_coord.col] = value + 1;
+	return (OK);
+}
+
+static int	scan_neighbours(t_coord coord, t_grid *heat, t_vec *adj)
 {
 	char	value;
 	t_coord	new_coord;
 
 	value = heat->array[coord.row][coord.col];
 	new_coord = (t_coord){.row = coord.row - 1, .col = coord.col};
-	if (coord.row > 0 && heat->array[new_coord.row][new_coord.col] == -1)
-	{
-		vec_push(adj, &new_coord);
-		heat->array[new_coord.row][new_coord.col] = value + 1;
-	}
+	if (coord.row > 0 && !fill(value, new_coord, heat, adj))
+		return (error(NULL, "Error filling neighbour: scan_neighbours()"));
 	new_coord = (t_coord){.row = coord.row, .col = coord.col - 1};
-	if (coord.col > 0 && heat->array[new_coord.row][new_coord.col] == -1)
-	{
-		vec_push(adj, &new_coord);
-		heat->array[new_coord.row][new_coord.col] = value + 1;
-	}
+	if (coord.col > 0 && !fill(value, new_coord, heat, adj))
+		return (error(NULL, "Error filling neighbour: scan_neighbours()"));
 	new_coord = (t_coord){.row = coord.row + 1, .col = coord.col};
 	if (coord.row < heat->dimensions.h -1
-		&& heat->array[new_coord.row][new_coord.col] == -1)
-	{
-		vec_push(adj, &new_coord);
-		heat->array[new_coord.row][new_coord.col] = value + 1;
-	}
+		&& !fill(value, new_coord, heat, adj))
+		return (error(NULL, "Error filling neighbour: scan_neighbours()"));
 	new_coord = (t_coord){.row = coord.row, .col = coord.col + 1};
 	if (coord.col < heat->dimensions.w -1
-		&& heat->array[new_coord.row][new_coord.col] == -1)
-	{
-		vec_push(adj, &new_coord);
-		heat->array[new_coord.row][new_coord.col] = value + 1;
-	}
+		&& !fill(value, new_coord, heat, adj))
+		return (error(NULL, "Error filling neighbour: scan_neighbours()"));
+	return (OK);
 }
 
-static int	init_queue(t_grid heat, t_vec *adj)
+int	init_queue(t_grid heat, t_vec *adj)
 {
 	t_dimensions	limit;
 	t_coord			coord;
@@ -85,7 +84,7 @@ static int	init_queue(t_grid heat, t_vec *adj)
 	return (OK);
 }
 
-static void	scan_queue(t_grid *heat, t_vec *adj)
+int	scan_queue(t_grid *heat, t_vec *adj)
 {
 	size_t	index;
 	t_coord	coord;
@@ -94,20 +93,9 @@ static void	scan_queue(t_grid *heat, t_vec *adj)
 	while (index < adj->len)
 	{
 		coord = ((t_coord *)(adj->memory))[index];
-		enqueue(coord, heat, adj);
+		if(!scan_neighbours(coord, heat, adj))
+			return (error(NULL,"Error scanning neighbours: scan_queue()"));
 		index++;
 	}
-}
-
-int	fill_heat(t_board *board)
-{
-	t_vec	queue;
-
-	if (vec_new(&queue, 1, sizeof(t_coord)) == -1)
-		return (error(NULL, "Error allocating queue: fill_heat()"));
-	if (init_queue(board->heat, &queue) == -1)
-		return (error(NULL, "Error initializing queue: fill_heat()"));
-	scan_queue(&(board->heat), &queue);
-	vec_free(&queue);
 	return (OK);
 }
