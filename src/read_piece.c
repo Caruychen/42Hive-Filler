@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 17:12:31 by cchen             #+#    #+#             */
-/*   Updated: 2022/05/10 21:43:24 by cchen            ###   ########.fr       */
+/*   Updated: 2022/05/11 00:23:07 by cchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,12 @@ static void	update_piece(t_piece *piece, t_coord coord)
 {
 	if (coord.row < piece->start.row)
 		piece->start.row = coord.row;
-	if (coord.row >= piece->start.row + piece->real_size.h)
-		piece->real_size.h = coord.row - piece->start.row + 1;
+	if (coord.row > piece->end.row)
+		piece->end.row = coord.row;
 	if (coord.col < piece->start.col)
 		piece->start.col = coord.col;
-	if (coord.col >= piece->start.col + piece->real_size.w)
-		piece->real_size.w = coord.col - piece->start.col + 1;
+	if (coord.col > piece->end.col)
+		piece->end.col = coord.col;
 }
 
 static int	seek_piece(t_piece *piece)

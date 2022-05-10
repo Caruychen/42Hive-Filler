@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 10:01:17 by cchen             #+#    #+#             */
-/*   Updated: 2022/05/10 21:21:42 by cchen            ###   ########.fr       */
+/*   Updated: 2022/05/11 00:21:14 by cchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define FILLER_H
 
 # define ERROR 0
+# define FAIL 0
 # define OK 1
 # define STDIN 0
 /* DELETE ME */
@@ -48,14 +49,14 @@ typedef struct s_board
 	char		me;
 	char		enemy;
 	t_coord		start;
-	t_dimensions	real_size;
+	t_coord		end;
 }				t_board;
 
 typedef struct s_piece
 {
 	t_grid		grid;
 	t_coord		start;
-	t_dimensions	real_size;
+	t_coord		end;
 }				t_piece;
 
 int		init(t_board *board, t_piece *piece);
@@ -64,11 +65,11 @@ int		read_piece(t_piece *piece);
 int		error(char **array, char *msg);
 int		skip_line(void);
 int		make_grid(t_grid *grid);
-int		is_valid_line(char *line, int width, char *sample);
 int		set_grid(t_grid *grid, int start, char *sample);
 int		set_dimensions(t_dimensions *dimensions, char *name);
 int		set_heat(t_board *board);
 int		init_queue(t_grid heat, t_vec *adj);
 int		scan_queue(t_grid *heat, t_vec *adj);
+int		place_piece(t_board board, t_piece piece, t_coord *res);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 13:10:11 by cchen             #+#    #+#             */
-/*   Updated: 2022/05/10 21:42:39 by cchen            ###   ########.fr       */
+/*   Updated: 2022/05/11 00:24:39 by cchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,12 @@ static void	update_board(t_board *board, t_coord coord)
 {
 	if (coord.row < board->start.row)
 		board->start.row = coord.row;
-	if (coord.row >= board->start.row + board->real_size.h)
-		board->real_size.h = coord.row - board->start.row + 1;
+	if (coord.row > board->end.row)
+		board->end.row = coord.row;
 	if (coord.col < board->start.col)
 		board->start.col = coord.col;
-	if (coord.col >= board->start.col + board->real_size.w)
-		board->real_size.w = coord.col - board->start.col + 1;
+	if (coord.col > board->end.col)
+		board->end.col = coord.col;
 }
 
 static int	seek_me(t_board *board)
@@ -56,7 +56,7 @@ static int	seek_me(t_board *board)
 		coord.col = 0;
 		while (coord.col < limit.w)
 		{
-			if (array[coord.row][coord.col] == board->me)
+			if (ft_toupper(array[coord.row][coord.col] == board->me))
 				update_board(board, coord);
 			coord.col++;
 		}

@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 11:01:19 by cchen             #+#    #+#             */
-/*   Updated: 2022/05/10 21:18:33 by cchen            ###   ########.fr       */
+/*   Updated: 2022/05/10 22:59:14 by cchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void	init_heat(t_board *board)
 		while (index.w < limit.w)
 		{
 			board->heat.array[index.h][index.w]
-				= -(grid[index.h][index.w] != enemy);
+				= -(ft_toupper(grid[index.h][index.w]) != enemy);
 			index.w++;
 		}
 		index.h++;
