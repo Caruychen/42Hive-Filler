@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 13:10:11 by cchen             #+#    #+#             */
-/*   Updated: 2022/05/11 00:24:39 by cchen            ###   ########.fr       */
+/*   Updated: 2022/05/11 10:33:10 by cchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,14 @@ static int	make_board(t_board *board)
 
 static void	update_board(t_board *board, t_coord coord)
 {
-	if (coord.row < board->start.row)
-		board->start.row = coord.row;
-	if (coord.row > board->end.row)
-		board->end.row = coord.row;
-	if (coord.col < board->start.col)
-		board->start.col = coord.col;
-	if (coord.col > board->end.col)
-		board->end.col = coord.col;
+	if (coord.row < board->me_start.row)
+		board->me_start.row = coord.row;
+	if (coord.row > board->me_end.row)
+		board->me_end.row = coord.row;
+	if (coord.col < board->me_start.col)
+		board->me_start.col = coord.col;
+	if (coord.col > board->me_end.col)
+		board->me_end.col = coord.col;
 }
 
 static int	seek_me(t_board *board)
@@ -49,14 +49,14 @@ static int	seek_me(t_board *board)
 
 	array = board->grid.array;
 	limit = board->grid.dimensions;
-	board->start = (t_coord){.row = limit.h, .col = limit.w};
+	board->me_start = (t_coord){.row = limit.h, .col = limit.w};
 	coord.row = 0;
 	while (coord.row < limit.h)
 	{
 		coord.col = 0;
 		while (coord.col < limit.w)
 		{
-			if (ft_toupper(array[coord.row][coord.col] == board->me))
+			if (ft_toupper(array[coord.row][coord.col]) == board->me)
 				update_board(board, coord);
 			coord.col++;
 		}
@@ -67,6 +67,8 @@ static int	seek_me(t_board *board)
 
 int	read_board(t_board *board)
 {
+	ft_bzero(&(board->me_start), sizeof(board->me_start));
+	ft_bzero(&(board->me_end), sizeof(board->me_end));
 	if (!make_board(board))
 		return (error(NULL, "Error making board: read_board()"));
 	skip_line();

@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 17:12:31 by cchen             #+#    #+#             */
-/*   Updated: 2022/05/11 00:23:07 by cchen            ###   ########.fr       */
+/*   Updated: 2022/05/11 10:31:31 by cchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,16 @@ static int	seek_piece(t_piece *piece)
 		}
 		coord.row++;
 	}
+	piece->size.h = piece->end.row - piece->start.row + 1;
+	piece->size.w = piece->end.col - piece->start.col + 1;
 	return (OK);
 }
 
 int	read_piece(t_piece *piece)
 {
+	ft_bzero(&(piece->start), sizeof(piece->start));
+	ft_bzero(&(piece->end), sizeof(piece->end));
+	ft_bzero(&(piece->size), sizeof(piece->size));
 	if (!make_piece(piece))
 		return (error(NULL, "Error making piece: read_piece()"));
 	if (!set_grid(&(piece->grid), 0, ".*"))

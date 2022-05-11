@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 21:55:37 by cchen             #+#    #+#             */
-/*   Updated: 2022/05/11 00:20:31 by cchen            ###   ########.fr       */
+/*   Updated: 2022/05/11 10:49:18 by cchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,33 +27,31 @@ static int	get_heat(char **array, t_coord b_index, t_coord p_index)
 
 static int	check_piece(t_board board, t_piece piece, t_coord b_index)
 {
-	t_coord	p_index;
-	t_dimensions	limit;
 	int		overlaps;
 	int		sum;
+	int		reset_col;
 
-	p_index = piece.start;
-	limit.h = piece.start.row + piece.real_size.h;
-	limit.w = piece.start.col + piece.real_size.w;
 	sum = 0;
 	overlaps = 0;
-	while (p_index.row < limit.h)
+	reset_col = piece.start.col;
+	while (piece.start.row < piece.end.row + 1)
 	{
-		while (p_index.col < limit.w)
+		piece.start.col = reset_col;
+		while (piece.start.col < piece.end.col + 1)
 		{
-			if (piece.grid.array[p_index.row][p_index.col] == '*')
+			if (piece.grid.array[piece.start.row][piece.start.col] == '*')
 			{
-				if (is_overlap(board.enemy, board, b_index, p_index))
+				if (is_overlap(board.enemy, board, b_index, piece.start))
 					return (-1);
-				if (is_overlap(board.me, board, b_index, p_index))
+				if (is_overlap(board.me, board, b_index, piece.start))
 					overlaps++;
 				if (overlaps > 1)
 					return (-1);
-				sum += get_heat(board.heat.array, b_index, p_index);
+				sum += get_heat(board.heat.array, b_index, piece.start);
 			}
-			p_index.col++;
+			piece.start.col++;
 		}
-		p_index.row++;
+		piece.start.row++;
 	}
 	if (overlaps == 0)
 		return (-1);
@@ -66,24 +64,26 @@ static t_dimensions	set_limit(t_board board, t_piece piece)
 	t_dimensions	res;
 	
 	limit = board.grid.dimensions;
-	res.h = board.start.row + board.real_size.h;
-	if (res.h > limit.h - piece.real_size.h + 1)
-		res.h = limit.h - piece.real_size.h + 1;
-	res.w = board.start.col + board.real_size.w;
-	if (res.w > limit.w - piece.real_size.w + 1)
-		res.w = limit.w - piece.real_size.w + 1;
+	if (board.me_end.row < limit.h - piece.size.h - piece.start.row)
+		res.h = board.me_end.row + 1;
+	else
+		res.h = limit.h - piece.size.h - piece.start.row + 1;
+	if (board.me_end.col < limit.w - piece.size.w - piece.start.col)
+		res.w = board.me_end.col + 1;
+	else
+		res.w = limit.w - piece.size.w - piece.start.col + 1;
 	return (res);
 }
 
 static t_coord	set_start(t_board *board, t_piece piece)
 {
-	board->start.row = board->start.row - (piece.start.row + piece.real_size.h) + 1;
-	if (piece.start.row + board->start.row < 0)
-		board->start.row = 0 - piece.start.row;
-	board->start.col = board->start.col - (piece.start.col + piece.real_size.w) + 1;
-	if (piece.start.col + board->start.col < 0)
-		board->start.col = 0 - piece.start.col;
-	return (board->start);
+	board->me_start.row = board->me_start.row - piece.end.row;
+	if (board->me_start.row + piece.start.row < 0)
+		board->me_start.row = 0 - piece.start.row;
+	board->me_start.col = board->me_start.col - piece.end.col;
+	if (board->me_start.col + piece.start.col < 0)
+		board->me_start.col = 0 - piece.start.col;
+	return (board->me_start);
 }
 
 int	place_piece(t_board board, t_piece piece, t_coord *res)
@@ -98,15 +98,14 @@ int	place_piece(t_board board, t_piece piece, t_coord *res)
 	min = -1;
 	while (index.row < limit.h)
 	{
-		index.col = board.start.col;
+		index.col = board.me_start.col;
 		while (index.col < limit.w)
 		{
 			heat = check_piece(board, piece, index);
 			if (heat != -1 && (heat < min || min == -1))
 			{
 				min = heat;
-				res->row = index.row - piece.start.row;
-				res->col = index.col - piece.start.col;
+				*res = index;
 			}
 			index.col++;
 		}

@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 13:50:14 by cchen             #+#    #+#             */
-/*   Updated: 2022/05/10 21:46:29 by cchen            ###   ########.fr       */
+/*   Updated: 2022/05/11 10:17:39 by cchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,10 +77,10 @@ int	set_grid(t_grid *grid, int start, char *sample)
 	while (row < height)
 	{
 		if (get_next_line(0, &line) <= 0)
-			return (error(grid->array, "Error reading line: read_input()"));
+			return (error(grid->array, "Error reading line: set_grid()"));
 		ft_memcpy(grid->array[row], line + start, width);
 		if (!is_valid_line(grid->array[row], width, sample))
-			return (error(grid->array, "Invalid board detected: read_input()"));
+			return (error(grid->array, "Invalid board detected: set_grid()"));
 		ft_strdel(&line);
 		++row;
 	}
@@ -90,9 +90,13 @@ int	set_grid(t_grid *grid, int start, char *sample)
 int	skip_line(void)
 {
 	char	*line;
+	int	res;
 
-	if (get_next_line(0, &line) <= 0)
+	res = get_next_line(0, &line);
+	if (res < 0)
 		return (ERROR);
+	if (res == 0)
+		return (OK);
 	ft_strdel(&line);
 	return (OK);
 }
