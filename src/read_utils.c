@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 13:50:14 by cchen             #+#    #+#             */
-/*   Updated: 2022/05/11 10:17:39 by cchen            ###   ########.fr       */
+/*   Updated: 2022/05/11 14:00:20 by cchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,13 +90,13 @@ int	set_grid(t_grid *grid, int start, char *sample)
 int	skip_line(void)
 {
 	char	*line;
-	int	res;
+	int		res;
 
 	res = get_next_line(0, &line);
 	if (res < 0)
 		return (ERROR);
 	if (res == 0)
-		return (OK);
+		return (END);
 	ft_strdel(&line);
 	return (OK);
 }

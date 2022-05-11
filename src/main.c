@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 10:00:00 by cchen             #+#    #+#             */
-/*   Updated: 2022/05/11 10:22:21 by cchen            ###   ########.fr       */
+/*   Updated: 2022/05/11 14:00:03 by cchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ int	main(void)
 		return (0);
 	while (1)
 	{
-		if (!read_board(&board))
-			return (error(NULL, "Error: read board failed"));
+		if (read_board(&board) != OK)
+			return (0);
 		if (!read_piece(&piece))
 			return (error(board.grid.array, "Error: read piece failed"));
 		if (!set_heat(&board))
@@ -31,12 +31,9 @@ int	main(void)
 		if (place_piece(board, piece, &res))
 			ft_printf("%d %d\n", res.row, res.col);
 		else
-		{
-			ft_strdelarray(&board.grid.array);
-			ft_strdelarray(&board.heat.array);
-			ft_strdelarray(&piece.grid.array);
-			return (0);
-		}
+			break ;
 	}
-	return (0);
+	cleanup(board, piece);
+	ft_printf("0 0\n");
+	return (END);
 }
