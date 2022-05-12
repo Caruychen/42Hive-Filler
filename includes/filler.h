@@ -6,7 +6,7 @@
 /*   By: cchen <cchen@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 10:01:17 by cchen             #+#    #+#             */
-/*   Updated: 2022/05/11 14:45:15 by cchen            ###   ########.fr       */
+/*   Updated: 2022/05/12 19:37:39 by cchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,8 @@
 # define OK 1
 # define STDIN 0
 # define END 0
-/* DELETE ME */
-# include <stdio.h>
-/* END DELETE ME */
 
 # include "libft.h"
-# include <stdint.h>
 
 typedef struct s_coord
 {
