@@ -3,6 +3,7 @@ use std::net::TcpListener;
 use std::net::TcpStream;
 use std::fs;
 use filler::ThreadPool;
+use filler::Filler;
 
 fn main() {
 	let listener = TcpListener::bind("127.0.0.1:7878").unwrap();
@@ -27,6 +28,10 @@ fn handle_connection(mut stream: TcpStream) {
 	let (status_line, filename) = if buffer.starts_with(get) {
 		("HTTP/1.1 200 OK", "index.html")
 	} else if buffer.starts_with(getjs) {
+        Filler::run("./assets/filler_vm",
+                    &mut ["-f", "assets/map02",
+                        "-p1", "./assets/players/cchen.filler",
+                        "-p2", "./assets/players/cchen.filler"]);
 		("HTTP/1.1 200 OK", "js/index.js")	
 	} else {
 		("HTTP/1.1 404 NOT FOUND", "404.html")
