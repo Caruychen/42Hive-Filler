@@ -31,10 +31,12 @@ fn handle_connection(mut stream: TcpStream) {
 	} else if buffer.starts_with(getcss) {
 		("HTTP/1.1 200 OK", "filler.css")
 	} else if buffer.starts_with(getjs) {
+/*
         Filler::run("./assets/filler_vm",
                     &mut ["-f", "assets/map02",
                         "-p1", "./assets/players/cchen.filler",
                         "-p2", "./assets/players/cchen.filler"]);
+*/
 		("HTTP/1.1 200 OK", "js/index.js")	
 	} else {
 		("HTTP/1.1 404 NOT FOUND", "404.html")
