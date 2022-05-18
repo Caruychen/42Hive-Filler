@@ -24,9 +24,12 @@ fn handle_connection(mut stream: TcpStream) {
 
 	let get = b"GET / HTTP/1.1\r\n";
 	let getjs = b"GET /js/index.js HTTP/1.1\r\n";
+	let getcss = b"GET /filler.css HTTP/1.1\r\n";
 
 	let (status_line, filename) = if buffer.starts_with(get) {
 		("HTTP/1.1 200 OK", "index.html")
+	} else if buffer.starts_with(getcss) {
+		("HTTP/1.1 200 OK", "filler.css")
 	} else if buffer.starts_with(getjs) {
         Filler::run("./assets/filler_vm",
                     &mut ["-f", "assets/map02",
