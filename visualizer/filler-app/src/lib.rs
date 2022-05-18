@@ -114,21 +114,24 @@ impl Filler {
         stdout
     }
 
-    pub fn run(filler: &str, args: &mut [&str]) {
+    pub fn run(filler: &str, args: &mut [&str]) -> Filler {
         let stdout = Filler::call_cmd(filler, args);
         let mut data = vec![];
         let mut index = 0;
         let mut is_begun = false;
         for line in stdout.split("\n") {
+            let is_mapln = line.chars().count() > 3 && (&line[..3]).parse::<f64>().is_ok();
             if line.starts_with("Plateau") {
                 data.push(vec![]);
                 index += 1;
                 is_begun = true;
             }
-            else if is_begun {
-                data[index - 1].push(line);
+            else if is_begun && is_mapln {
+                data[index - 1].push(&line[4..]);
             }
         }
-        println!("Vector: {}", data[0][0]);
+	let mut replay = json::stringify(data);
+
+	Filler { replay }
     }
 }
