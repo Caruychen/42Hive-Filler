@@ -42,13 +42,13 @@ fn dispatch(buffer: [u8; 1024]) -> (&'static str, String) {
 	let (status_line, filename);
 
 	if buffer.starts_with(get) {
-		(status_line, filename) = ("HTTP/1.1 200 OK", "index.html");
+		(status_line, filename) = ("HTTP/1.1 200 OK", "public/index.html");
 	}
 	else if buffer.starts_with(getcss) {
-		(status_line, filename) = ("HTTP/1.1 200 OK", "filler.css");
+		(status_line, filename) = ("HTTP/1.1 200 OK", "public/filler.css");
 	}
 	else if buffer.starts_with(getjs) {
-		(status_line, filename) = ("HTTP/1.1 200 OK", "js/index.js");
+		(status_line, filename) = ("HTTP/1.1 200 OK", "public/js/index.js");
 	}
 	else if buffer.starts_with(run) {
 		let contents = Filler::run("./assets/filler_vm",
