@@ -21,6 +21,15 @@ function init_grid() {
 	}
 }
 
+function get_players() {
+	$.ajax({
+		url: "players",
+		success: function(data, status, xhr) {
+			console.log(data);
+		}
+	});
+}
+
 function run_game() {
 	set_loading();
 	$.ajax({
@@ -73,3 +82,4 @@ function _set_grid_line(grid, lnIndex, line)
 }
 
 window.onload = init_grid;
+window.onload = get_players;
