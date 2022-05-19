@@ -11,6 +11,11 @@ function set_loading() {
 	document.getElementById("loading").style.display = "block";
 }
 
+function init() {
+	init_grid();
+	get_players();
+}
+
 function init_grid() {
 	let grid = document.getElementsByClassName("grid-container")[0];
 	for (let i = 0; i < 10000; i++) {
@@ -25,20 +30,29 @@ function get_players() {
 	$.ajax({
 		url: "players",
 		success: function(data, status, xhr) {
-			console.log(data);
+			let playerSelect = document.getElementsByClassName("player-select");
+			const players = JSON.parse(data);
+			Array.from(playerSelect).forEach(select => {
+				players.forEach(player => {
+					let option = document.createElement("option");
+					option.setAttribute("value", player);
+					option.innerHTML = player.substring(0, player.indexOf('.'));
+					select.appendChild(option);
+				})
+			});
 		}
 	});
 }
 
 function run_game() {
 	set_loading();
-	$.ajax({
-		url: "run",
-		success: function(data, status, xhr) {
+	$.get("run",
+		{ p1: "cchen.filler", p2: "carli.filler" },
+		function(data, status, xhr) {
 			overlay_off();
 			run_replay(data);
 		}
-	});
+	);
 }
 
 function run_replay(data) {
@@ -81,5 +95,4 @@ function _set_grid_line(grid, lnIndex, line)
 	});
 }
 
-window.onload = init_grid;
-window.onload = get_players;
+window.onload = init;
