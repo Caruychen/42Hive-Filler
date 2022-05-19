@@ -1,6 +1,6 @@
 let play_result; 
 const gridWidth = 100;
-const gridColors = ["#E7D4C0","#88B2CC","#658EA9","#E98973","#F73019"];
+const gridColors = ["#E7D4C0","#429E9D","#658EA9","#E98973","#F73019"];
 
 function overlay_off() {
 	document.getElementsByClassName("overlay")[0].style.display = "none";	
