@@ -47,7 +47,7 @@ function get_players() {
 function run_game() {
 	set_loading();
 	$.get("run",
-		{ p1: "cchen.filler", p2: "carli.filler" },
+//		{ p1: "cchen.filler", p2: "carli.filler" },
 		function(data, status, xhr) {
 			overlay_off();
 			run_replay(data);

@@ -22,7 +22,7 @@ fn main() {
 fn handle_connection(mut stream: TcpStream) {
 	let mut buffer = [0; 1024];
 	stream.read(&mut buffer).unwrap();
-    println!("{}", buffer);
+    println!("Request: {}", String::from_utf8_lossy(&buffer[..]));
 
 	let (status_line, contents) = dispatch(buffer);
 	
@@ -60,7 +60,7 @@ fn dispatch(buffer: [u8; 1024]) -> (&'static str, String) {
 		let contents = Filler::run("./assets/filler_vm",
 			    &mut ["-f", "assets/map02",
 				"-p1", "./assets/players/cchen.filler",
-				"-p2", "./assets/players/cchen.filler"]);
+				"-p2", "./assets/players/grati.filler"]);
 		return ("HTTP/1.1 200 OK", contents.replay)
 	}
 	else {
