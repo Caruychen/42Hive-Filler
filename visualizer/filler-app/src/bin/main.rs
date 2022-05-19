@@ -4,6 +4,7 @@ use std::net::TcpStream;
 use std::fs;
 use filler::ThreadPool;
 use filler::Filler;
+use json;
 
 fn main() {
 	let listener = TcpListener::bind("127.0.0.1:7878").unwrap();
@@ -38,6 +39,7 @@ fn dispatch(buffer: [u8; 1024]) -> (&'static str, String) {
 	let get = b"GET / HTTP/1.1\r\n";
 	let getjs = b"GET /js/index.js HTTP/1.1\r\n";
 	let getcss = b"GET /filler.css HTTP/1.1\r\n";
+	let players = b"GET /players HTTP/1.1\r\n";
 	let run = b"GET /run HTTP/1.1\r\n";
 	let (status_line, filename);
 
@@ -50,6 +52,9 @@ fn dispatch(buffer: [u8; 1024]) -> (&'static str, String) {
 	else if buffer.starts_with(getjs) {
 		(status_line, filename) = ("HTTP/1.1 200 OK", "public/js/index.js");
 	}
+    else if buffer.starts_with(players) {
+		return ("HTTP/1.1 200 OK", get_players_json())
+    }
 	else if buffer.starts_with(run) {
 		let contents = Filler::run("./assets/filler_vm",
 			    &mut ["-f", "assets/map02",
@@ -63,4 +68,17 @@ fn dispatch(buffer: [u8; 1024]) -> (&'static str, String) {
 	
 	let contents = fs::read_to_string(filename).unwrap();
 	(status_line, contents)
+}
+
+fn get_players_json() -> String {
+    let paths = fs::read_dir("./assets/players/").unwrap();
+    let names = paths.map(|entry| {
+        let entry = entry.unwrap();
+        let entry_path = entry.path();
+        let file_name = entry_path.file_name().unwrap();
+        let file_name_str = file_name.to_str().unwrap();
+        let file_name_string = String::from(file_name_str);
+        file_name_string
+    }).collect::<Vec<String>>();
+    json::stringify(names)
 }
