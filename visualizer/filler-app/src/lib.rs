@@ -100,7 +100,7 @@ impl Drop for ThreadPool {
 }
 
 pub struct Filler {
-    replay: String
+    pub replay: String
 }
 
 impl Filler {

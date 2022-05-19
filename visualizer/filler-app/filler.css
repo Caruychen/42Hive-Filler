@@ -1,3 +1,7 @@
+button {
+	cursor: pointer;
+}
+
 .content {
 	width: 100%;
 	margin: auto;
@@ -29,10 +33,9 @@
 	right: 0;
 	background-color: rgba(0,0,0,0.5);
 	z-index: 2;
-	cursor: pointer;
 }
 
-#run-game{
+.overlay-text{
 	position: absolute;
 	top: 50%;
 	left: 50%;
@@ -45,3 +48,8 @@
 .grid-container > .grid-item {
 	background-color: rgb(239, 237, 238);
 }
+
+#loading {
+	display: none;
+}
+
