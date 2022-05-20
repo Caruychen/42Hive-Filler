@@ -22,7 +22,6 @@ fn main() {
 fn handle_connection(mut stream: TcpStream) {
 	let mut buffer = [0; 1024];
 	stream.read(&mut buffer).unwrap();
-    println!("Request: {}", String::from_utf8_lossy(&buffer[..]));
 
 	let (status_line, contents) = dispatch(buffer);
 	
@@ -64,7 +63,7 @@ fn dispatch(buffer: [u8; 1024]) -> (&'static str, String) {
 		return ("HTTP/1.1 200 OK", contents.replay)
 	}
 	else {
-		(status_line, filename) = ("HTTP/1.1 404 NOT FOUND", "404.html");
+		(status_line, filename) = ("HTTP/1.1 404 NOT FOUND", "public/404.html");
 	}
 	
 	let contents = fs::read_to_string(filename).unwrap();
