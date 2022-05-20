@@ -57,14 +57,15 @@ fn dispatch(buffer: [u8; 1024]) -> (&'static str, String) {
 		return ("HTTP/1.1 200 OK", get_players_json())
     }
     else if run.is_match(std::str::from_utf8(&buffer).unwrap()) {
+        let path = "./assets/players/";
         let re = Regex::new(r"^GET /run\?p1=(\w+.filler)&p2=(\w+.filler) HTTP/1.1").unwrap();
         let caps = re.captures(std::str::from_utf8(&buffer).unwrap()).unwrap();
-        let p1 = caps.get(1).map_or("", |m| m.as_str());
-        let p2 = caps.get(2).map_or("", |m| m.as_str());
+        let p1 = format!("{}{}", path, caps.get(1).map_or("", |m| m.as_str()));
+        let p2 = format!("{}{}", path, caps.get(2).map_or("", |m| m.as_str()));
 		let contents = Filler::run("./assets/filler_vm",
 			    &mut ["-f", "assets/map02",
-				"-p1", "./assets/players/cchen.filler",
-				"-p2", "./assets/players/grati.filler"]);
+				"-p1", p1.as_str(),
+				"-p2", p2.as_str()]);
 		return ("HTTP/1.1 200 OK", contents.replay)
 	}
 	else {
