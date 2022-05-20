@@ -46,8 +46,10 @@ function get_players() {
 
 function run_game() {
 	set_loading();
+	const player1 = document.getElementById("p1-Select").value;
+	const player2 = document.getElementById("p2-Select").value;
 	$.get("run",
-		{ p1: "cchen.filler", p2: "carli.filler" },
+		{ p1: player1, p2: player2 },
 		function(data, status, xhr) {
 			overlay_off();
 			run_replay(data);
