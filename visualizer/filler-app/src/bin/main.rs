@@ -4,6 +4,7 @@ use std::net::TcpStream;
 use std::fs;
 use filler::ThreadPool;
 use filler::Filler;
+use regex::Regex;
 use json;
 
 fn main() {
@@ -40,7 +41,7 @@ fn dispatch(buffer: [u8; 1024]) -> (&'static str, String) {
 	let getjs = b"GET /js/index.js HTTP/1.1\r\n";
 	let getcss = b"GET /filler.css HTTP/1.1\r\n";
 	let players = b"GET /players HTTP/1.1\r\n";
-	let run = b"GET /run HTTP/1.1\r\n";
+    let run = Regex::new(r"^GET /run\?p1=\w+.filler&p2=\w+.filler HTTP/1.1").unwrap();
 	let (status_line, filename);
 
 	if buffer.starts_with(get) {
@@ -55,7 +56,11 @@ fn dispatch(buffer: [u8; 1024]) -> (&'static str, String) {
     else if buffer.starts_with(players) {
 		return ("HTTP/1.1 200 OK", get_players_json())
     }
-	else if buffer.starts_with(run) {
+    else if run.is_match(std::str::from_utf8(&buffer).unwrap()) {
+        let re = Regex::new(r"^GET /run\?p1=(\w+.filler)&p2=(\w+.filler) HTTP/1.1").unwrap();
+        let caps = re.captures(std::str::from_utf8(&buffer).unwrap()).unwrap();
+        let p1 = caps.get(1).map_or("", |m| m.as_str());
+        let p2 = caps.get(2).map_or("", |m| m.as_str());
 		let contents = Filler::run("./assets/filler_vm",
 			    &mut ["-f", "assets/map02",
 				"-p1", "./assets/players/cchen.filler",
@@ -65,7 +70,7 @@ fn dispatch(buffer: [u8; 1024]) -> (&'static str, String) {
 	else {
 		(status_line, filename) = ("HTTP/1.1 404 NOT FOUND", "public/404.html");
 	}
-	
+
 	let contents = fs::read_to_string(filename).unwrap();
 	(status_line, contents)
 }
