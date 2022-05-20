@@ -2,8 +2,7 @@ use std::thread;
 use std::sync::mpsc;
 use std::sync::Arc;
 use std::sync::Mutex;
-use std::process::{Command, Stdio};
-use json;
+pub mod arena;
 
 enum Message {
     NewJob(Job),
@@ -96,42 +95,5 @@ impl Drop for ThreadPool {
                 thread.join().unwrap();
             }
         }
-    }
-}
-
-pub struct Filler {
-    pub replay: String
-}
-
-impl Filler {
-    fn call_cmd(filler: &str, args: &mut [&str]) -> String {
-        let output = Command::new(filler)
-            .args(args)
-            .stdout(Stdio::piped())
-            .output()
-            .unwrap();
-        let stdout = String::from_utf8(output.stdout).unwrap();
-        stdout
-    }
-
-    pub fn run(filler: &str, args: &mut [&str]) -> Filler {
-        let stdout = Filler::call_cmd(filler, args);
-        let mut data = vec![];
-        let mut index = 0;
-        let mut is_begun = false;
-        for line in stdout.split("\n") {
-            let is_mapln = line.chars().count() > 3 && (&line[..3]).parse::<f64>().is_ok();
-            if line.starts_with("Plateau") {
-                data.push(vec![]);
-                index += 1;
-                is_begun = true;
-            }
-            else if is_begun && is_mapln {
-                data[index - 1].push(&line[4..]);
-            }
-        }
-	let mut replay = json::stringify(data);
-
-	Filler { replay }
     }
 }

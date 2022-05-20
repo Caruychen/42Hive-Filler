@@ -3,7 +3,7 @@ use std::net::TcpListener;
 use std::net::TcpStream;
 use std::fs;
 use filler::ThreadPool;
-use filler::Filler;
+use filler::arena::Arena;
 use regex::Regex;
 use json;
 
@@ -62,11 +62,11 @@ fn dispatch(buffer: [u8; 1024]) -> (&'static str, String) {
         let caps = re.captures(std::str::from_utf8(&buffer).unwrap()).unwrap();
         let p1 = format!("{}{}", path, caps.get(1).map_or("", |m| m.as_str()));
         let p2 = format!("{}{}", path, caps.get(2).map_or("", |m| m.as_str()));
-		let contents = Filler::run("./assets/filler_vm",
+		let contents = Arena::run("./assets/filler_vm",
 			    &mut ["-f", "assets/map02",
 				"-p1", p1.as_str(),
 				"-p2", p2.as_str()]);
-		return ("HTTP/1.1 200 OK", contents.replay)
+		return ("HTTP/1.1 200 OK", contents.get_replay().to_string())
 	}
 	else {
 		(status_line, filename) = ("HTTP/1.1 404 NOT FOUND", "public/404.html");
