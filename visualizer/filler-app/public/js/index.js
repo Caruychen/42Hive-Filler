@@ -9,6 +9,17 @@ function overlay_off() {
 function set_loading() {
 	document.getElementById("run").style.display = "none";
 	document.getElementById("loading").style.display = "block";
+	document.getElementsByClassName("overlay")[0].classList.remove("playagain");
+}
+
+function set_playagain() {
+	document.getElementById("loading").style.display = "none";
+	let overlay = document.getElementsByClassName("overlay")[0];
+	let button = document.getElementById("run");
+	overlay.style.display = "block";
+	overlay.classList.add("playagain");
+	button.style.display = "block";
+	button.innerText = "Play again!";
 }
 
 function init() {
@@ -24,6 +35,13 @@ function init_grid() {
 		item.setAttribute("id", "item-" + i);
 		grid.appendChild(item);
 	}
+}
+
+function reset_grid() {
+	let items = document.getElementsByClassName("grid-item");
+	[...items].forEach(item => {
+		item.style.backgroundColor = gridColors[0];
+	});
 }
 
 function get_players() {
@@ -45,14 +63,16 @@ function get_players() {
 }
 
 function run_game() {
+	reset_grid();
 	set_loading();
 	const player1 = document.getElementById("p1-Select").value;
 	const player2 = document.getElementById("p2-Select").value;
 	$.get("run",
 		{ p1: player1, p2: player2 },
-		function(data, status, xhr) {
+		async function(data, status, xhr) {
 			overlay_off();
-			run_replay(data);
+			await Promise.all(run_replay(data));
+			set_playagain();
 		}
 	);
 }
@@ -60,17 +80,18 @@ function run_game() {
 function run_replay(data) {
 	const array = JSON.parse(data);
 	let grid = $("div.grid-item");
-	array.forEach((state, index)=> {
-		_set_state(grid, state, index);
-	});
+	return array.map((state, index) => _set_state(grid, state, index));
 }
 
 function _set_state(grid, state, stateNum) {
-	setTimeout(function () {
-		state.forEach((line, lnIndex) => {
-			_set_grid_line(grid, lnIndex, line);
-		})
-	}, 10 * stateNum)
+	return new Promise((resolve, reject) => {
+		setTimeout(function () {
+			state.forEach((line, lnIndex) => {
+				_set_grid_line(grid, lnIndex, line);
+			});
+			resolve(1);
+		}, 10 * stateNum)
+	});
 }
 
 function _set_grid_line(grid, lnIndex, line)
@@ -80,7 +101,6 @@ function _set_grid_line(grid, lnIndex, line)
 			case 'O':
 				return 1;
 			case 'o':
-				console.log("foundo");
 				return 2;
 			case 'X':
 				return 3;

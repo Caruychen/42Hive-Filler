@@ -2,6 +2,10 @@ button {
 	cursor: pointer;
 }
 
+h1, h2 {
+	text-align: center;
+}
+
 .content {
 	width: 100%;
 	margin: auto;
@@ -17,9 +21,12 @@ button {
 .grid-container {
 	position: relative;
 	display: grid;
-	grid-template-columns: repeat(100, 10px);
-	grid-template-rows: repeat(100, 10px);
+	width: 80vmin;
+	height: 80vmin;
+	grid-template-columns: repeat(100, 2fr);
+	grid-template-rows: repeat(100, 2fr);
 	padding: 10px;
+	margin: 10px;
 	background-color: grey;
 }
 
@@ -32,8 +39,23 @@ button {
 	left: 0;
 	bottom: 0;
 	right: 0;
-	background-color: rgba(0,0,0,0.5);
 	z-index: 2;
+}
+
+.playagain {
+	visibility: hidden;
+	opacity: 0;
+	transition: all 0.25s ease-out;
+}
+
+.grid-container:hover > .playagain {
+	visibility: visible;
+	opacity: 1;
+	transition: all 0.25s ease-in;
+}
+
+.overlay > button {
+	border-radius: 30px;
 }
 
 .overlay-text{
@@ -41,9 +63,13 @@ button {
 	top: 50%;
 	left: 50%;
 	font-size: 50px;
-	color: white;
+	color: black;
 	transform: translate(-50%,-50%);
 	-ms-transform: translate(-50%,-50%);
+}
+
+.subtext {
+	font-size: 1rem;
 }
 
 .grid-container > .grid-item {
@@ -54,3 +80,14 @@ button {
 	display: none;
 }
 
+.player-box {
+	padding: 10px;
+}
+
+.p1 {
+	background-color: #429E9D;
+}
+
+.p2 {
+	background-color: #E98973;
+}

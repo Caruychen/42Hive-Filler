@@ -32,7 +32,7 @@ impl Arena {
                 data[index - 1].push(&line[4..]);
             }
         }
-    let mut replay = json::stringify(data);
+    let replay = json::stringify(data);
 
     Arena { replay }
     }
